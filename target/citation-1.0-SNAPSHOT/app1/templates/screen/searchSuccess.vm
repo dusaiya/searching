@@ -1,0 +1,30 @@
+<div>
+	<h2>Information of citations</h2>
+	<table class="table table-striped">
+				
+			#if($!message)
+				<h2>&nbsp&nbsp&nbsp&nbsp<font color="red">No result: $!message</font></h2>
+			#else
+        		<tr>
+        			<th>Title</th>
+        			<th>Year</th>
+        			<th>Journal</th>
+        			<th>Operation</th>
+        		</tr>
+    			#foreach($!result in $!resultSet)
+				<tr>
+    				<td >$!result.title</td>
+    				<td>$!result.year</td>
+    				<td>$!result.journal</td>
+                    <td><button class="button button-primary" onclick="viewShare('$!result.wosId','$!result.title')"  name="ViewShare">View Shares</button></td>
+				</tr>
+				#end
+			#end
+	</table>
+</div>
+<script type="text/javascript">
+ function viewShare(titleId,title){
+  	//alert(titleId + title); 
+	window.location.href="viewShare.htm?titleId=" + titleId + "&title=" + title;
+  };
+</script>

@@ -1,0 +1,238 @@
+	<h2>Credit Shares</h2>
+	<form action="">
+		##<div>outputResult: "$!outputResult"</div>
+        ##<div>message: "$message"</div>
+		<div><b>Title:&nbsp&nbsp</b>  $!title</div>
+		<div><b>Citation Count:&nbsp&nbsp</b>    $!citationCount</div>
+		<div><b>Author Count:&nbsp&nbsp</b>    $!authorCount</div>
+<div>	
+<div id="canvas" class="float-left">
+</div>
+<div id="predictCanvas" class="float-left">
+</div>
+</div>
+<div>
+		<table class="table table-striped">
+			<tr>
+				<th>Strength</th>
+				#foreach($!name in $!nameList)
+				<th>$!name</th>
+				#end
+				<th>Title</th>
+			</tr>
+			#foreach($!share in $!shareList)
+			<tr>
+				#set($itemId=1)
+				#foreach($!item in $!share)
+				#if($itemId!=1)	<td>$!item</td> #end
+				#set($itemId=$itemId+1)
+				#end
+			</tr>
+			#end
+		</table>
+</form>
+</div>
+
+##<input id="dataList" type="hidden" value="$!dataList" />
+##<input id="nameJSList" type="hidden" value="$!nameJSList"/>
+##<input id="predictResult" type="hidden" value="$!predictResult"/>
+<input id="dataList" type="hidden" value="[[{&quot;a&quot;:&quot;8&quot;},{&quot;a&quot;:&quot;1989&quot;},{&quot;a&quot;:&quot;0.103704&quot;},{&quot;a&quot;:&quot;0.103704&quot;},{&quot;a&quot;:&quot; 0.17037&quot;},{&quot;a&quot;:&quot;0.103704&quot;},{&quot;a&quot;:&quot;0.103704&quot;},{&quot;a&quot;:&quot;0.103704&quot;},{&quot;a&quot;:&quot;0.103704&quot;},{&quot;a&quot;:&quot;0.103704&quot;},{&quot;a&quot;:&quot;0.103704&quot;}],[{&quot;a&quot;:&quot;51&quot;},{&quot;a&quot;:&quot;1990&quot;},{&quot;a&quot;:&quot;0.0991635&quot;},{&quot;a&quot;:&quot;0.0930974&quot;},{&quot;a&quot;:&quot;0.191382&quot;},{&quot;a&quot;:&quot;0.0991635&quot;},{&quot;a&quot;:&quot;0.0918337&quot;},{&quot;a&quot;:&quot;0.0842511&quot;},{&quot;a&quot;:&quot;0.121622&quot;},{&quot;a&quot;:&quot;0.115556&quot;},{&quot;a&quot;:&quot; 0.10393&quot;}],[{&quot;a&quot;:&quot;155&quot;},{&quot;a&quot;:&quot;1991&quot;},{&quot;a&quot;:&quot;0.0990316&quot;},{&quot;a&quot;:&quot;0.0871161&quot;},{&quot;a&quot;:&quot;0.225314&quot;},{&quot;a&quot;:&quot;0.0990316&quot;},{&quot;a&quot;:&quot;0.109063&quot;},{&quot;a&quot;:&quot;0.0815555&quot;},{&quot;a&quot;:&quot; 0.11156&quot;},{&quot;a&quot;:&quot;0.0961265&quot;},{&quot;a&quot;:&quot;0.0912014&quot;}],[{&quot;a&quot;:&quot;282&quot;},{&quot;a&quot;:&quot;1992&quot;},{&quot;a&quot;:&quot;0.0929996&quot;},{&quot;a&quot;:&quot;0.081129&quot;},{&quot;a&quot;:&quot;0.253662&quot;},{&quot;a&quot;:&quot;0.0929996&quot;},{&quot;a&quot;:&quot;0.124175&quot;},{&quot;a&quot;:&quot;0.0772134&quot;},{&quot;a&quot;:&quot;0.106283&quot;},{&quot;a&quot;:&quot;0.0875825&quot;},{&quot;a&quot;:&quot;0.0839554&quot;}],[{&quot;a&quot;:&quot;523&quot;},{&quot;a&quot;:&quot;1993&quot;},{&quot;a&quot;:&quot;0.0910844&quot;},{&quot;a&quot;:&quot;0.0823162&quot;},{&quot;a&quot;:&quot;0.256106&quot;},{&quot;a&quot;:&quot;0.0910844&quot;},{&quot;a&quot;:&quot;0.125168&quot;},{&quot;a&quot;:&quot;0.0794619&quot;},{&quot;a&quot;:&quot;0.103128&quot;},{&quot;a&quot;:&quot;0.0873788&quot;},{&quot;a&quot;:&quot;0.0842734&quot;}],[{&quot;a&quot;:&quot;752&quot;},{&quot;a&quot;:&quot;1994&quot;},{&quot;a&quot;:&quot;0.0894745&quot;},{&quot;a&quot;:&quot;0.0821139&quot;},{&quot;a&quot;:&quot;0.264885&quot;},{&quot;a&quot;:&quot;0.0893145&quot;},{&quot;a&quot;:&quot;  0.1235&quot;},{&quot;a&quot;:&quot;0.0801137&quot;},{&quot;a&quot;:&quot;0.100518&quot;},{&quot;a&quot;:&quot; 0.08632&quot;},{&quot;a&quot;:&quot;0.0837597&quot;}],[{&quot;a&quot;:&quot;965&quot;},{&quot;a&quot;:&quot;1995&quot;},{&quot;a&quot;:&quot;0.0881719&quot;},{&quot;a&quot;:&quot;0.0812795&quot;},{&quot;a&quot;:&quot;0.277019&quot;},{&quot;a&quot;:&quot;0.087676&quot;},{&quot;a&quot;:&quot;0.121023&quot;},{&quot;a&quot;:&quot;0.0796679&quot;},{&quot;a&quot;:&quot;0.0977473&quot;},{&quot;a&quot;:&quot;0.0848603&quot;},{&quot;a&quot;:&quot;0.0825545&quot;}],[{&quot;a&quot;:&quot;1216&quot;},{&quot;a&quot;:&quot;1996&quot;},{&quot;a&quot;:&quot;0.0886635&quot;},{&quot;a&quot;:&quot;0.0828829&quot;},{&quot;a&quot;:&quot;0.271949&quot;},{&quot;a&quot;:&quot;0.0882607&quot;},{&quot;a&quot;:&quot;0.119654&quot;},{&quot;a&quot;:&quot;0.0815737&quot;},{&quot;a&quot;:&quot;0.0973057&quot;},{&quot;a&quot;:&quot;0.0857919&quot;},{&quot;a&quot;:&quot;0.0839187&quot;}],[{&quot;a&quot;:&quot;1467&quot;},{&quot;a&quot;:&quot;1997&quot;},{&quot;a&quot;:&quot;0.0892804&quot;},{&quot;a&quot;:&quot;0.0842629&quot;},{&quot;a&quot;:&quot;0.266909&quot;},{&quot;a&quot;:&quot;0.0888552&quot;},{&quot;a&quot;:&quot;0.118498&quot;},{&quot;a&quot;:&quot;0.0831148&quot;},{&quot;a&quot;:&quot;0.0972221&quot;},{&quot;a&quot;:&quot;0.0867194&quot;},{&quot;a&quot;:&quot;0.0851376&quot;}],[{&quot;a&quot;:&quot;1682&quot;},{&quot;a&quot;:&quot;1998&quot;},{&quot;a&quot;:&quot;0.0899368&quot;},{&quot;a&quot;:&quot;0.0853322&quot;},{&quot;a&quot;:&quot;0.261943&quot;},{&quot;a&quot;:&quot;0.0896358&quot;},{&quot;a&quot;:&quot;0.117724&quot;},{&quot;a&quot;:&quot;0.0843165&quot;},{&quot;a&quot;:&quot;0.0974251&quot;},{&quot;a&quot;:&quot;0.0875808&quot;},{&quot;a&quot;:&quot;0.0861061&quot;}],[{&quot;a&quot;:&quot;1948&quot;},{&quot;a&quot;:&quot;1999&quot;},{&quot;a&quot;:&quot;0.0911403&quot;},{&quot;a&quot;:&quot;0.0868618&quot;},{&quot;a&quot;:&quot;0.253418&quot;},{&quot;a&quot;:&quot;0.0908091&quot;},{&quot;a&quot;:&quot;0.117413&quot;},{&quot;a&quot;:&quot;0.0859677&quot;},{&quot;a&quot;:&quot;0.0980065&quot;},{&quot;a&quot;:&quot;0.0888411&quot;},{&quot;a&quot;:&quot;0.087543&quot;}],[{&quot;a&quot;:&quot;2157&quot;},{&quot;a&quot;:&quot;2000&quot;},{&quot;a&quot;:&quot;0.0919981&quot;},{&quot;a&quot;:&quot;0.0879862&quot;},{&quot;a&quot;:&quot;0.247571&quot;},{&quot;a&quot;:&quot;0.0917557&quot;},{&quot;a&quot;:&quot; 0.11685&quot;},{&quot;a&quot;:&quot;0.0871074&quot;},{&quot;a&quot;:&quot;0.0983242&quot;},{&quot;a&quot;:&quot;0.0897973&quot;},{&quot;a&quot;:&quot;0.0886095&quot;}],[{&quot;a&quot;:&quot;2330&quot;},{&quot;a&quot;:&quot;2001&quot;},{&quot;a&quot;:&quot;0.0925774&quot;},{&quot;a&quot;:&quot; 0.08876&quot;},{&quot;a&quot;:&quot;0.243206&quot;},{&quot;a&quot;:&quot;0.0923508&quot;},{&quot;a&quot;:&quot;0.116639&quot;},{&quot;a&quot;:&quot;0.0879388&quot;},{&quot;a&quot;:&quot;0.0987322&quot;},{&quot;a&quot;:&quot;0.0904527&quot;},{&quot;a&quot;:&quot;0.0893426&quot;}],[{&quot;a&quot;:&quot;2536&quot;},{&quot;a&quot;:&quot;2002&quot;},{&quot;a&quot;:&quot;0.0933535&quot;},{&quot;a&quot;:&quot;0.0896608&quot;},{&quot;a&quot;:&quot;0.238211&quot;},{&quot;a&quot;:&quot;0.0930905&quot;},{&quot;a&quot;:&quot;0.116245&quot;},{&quot;a&quot;:&quot;0.088898&quot;},{&quot;a&quot;:&quot;0.0991074&quot;},{&quot;a&quot;:&quot;0.0912328&quot;},{&quot;a&quot;:&quot;0.0902018&quot;}],[{&quot;a&quot;:&quot;2748&quot;},{&quot;a&quot;:&quot;2003&quot;},{&quot;a&quot;:&quot;0.094077&quot;},{&quot;a&quot;:&quot;0.0904602&quot;},{&quot;a&quot;:&quot;0.233903&quot;},{&quot;a&quot;:&quot;0.0936849&quot;},{&quot;a&quot;:&quot;0.115946&quot;},{&quot;a&quot;:&quot;0.0897496&quot;},{&quot;a&quot;:&quot;0.0992907&quot;},{&quot;a&quot;:&quot;0.0919248&quot;},{&quot;a&quot;:&quot;0.0909643&quot;}],[{&quot;a&quot;:&quot;2981&quot;},{&quot;a&quot;:&quot;2004&quot;},{&quot;a&quot;:&quot;0.0948342&quot;},{&quot;a&quot;:&quot;0.0914364&quot;},{&quot;a&quot;:&quot;0.228688&quot;},{&quot;a&quot;:&quot;0.0944688&quot;},{&quot;a&quot;:&quot;0.115405&quot;},{&quot;a&quot;:&quot;0.0907286&quot;},{&quot;a&quot;:&quot;0.0997318&quot;},{&quot;a&quot;:&quot;0.0928013&quot;},{&quot;a&quot;:&quot;0.0919062&quot;}],[{&quot;a&quot;:&quot;3160&quot;},{&quot;a&quot;:&quot;2005&quot;},{&quot;a&quot;:&quot;0.0953183&quot;},{&quot;a&quot;:&quot;0.0920888&quot;},{&quot;a&quot;:&quot;0.225092&quot;},{&quot;a&quot;:&quot;0.094971&quot;},{&quot;a&quot;:&quot;0.115182&quot;},{&quot;a&quot;:&quot;0.091416&quot;},{&quot;a&quot;:&quot;0.100011&quot;},{&quot;a&quot;:&quot;0.093386&quot;},{&quot;a&quot;:&quot;0.0925353&quot;}],[{&quot;a&quot;:&quot;3373&quot;},{&quot;a&quot;:&quot;2006&quot;},{&quot;a&quot;:&quot;0.0955513&quot;},{&quot;a&quot;:&quot;0.092552&quot;},{&quot;a&quot;:&quot; 0.22371&quot;},{&quot;a&quot;:&quot;0.0952244&quot;},{&quot;a&quot;:&quot;0.114472&quot;},{&quot;a&quot;:&quot;0.0918574&quot;},{&quot;a&quot;:&quot;0.0999685&quot;},{&quot;a&quot;:&quot;0.0937324&quot;},{&quot;a&quot;:&quot;0.0929315&quot;}],[{&quot;a&quot;:&quot;3592&quot;},{&quot;a&quot;:&quot;2007&quot;},{&quot;a&quot;:&quot;0.0958645&quot;},{&quot;a&quot;:&quot;0.0930322&quot;},{&quot;a&quot;:&quot;0.221493&quot;},{&quot;a&quot;:&quot;0.0955558&quot;},{&quot;a&quot;:&quot;0.114066&quot;},{&quot;a&quot;:&quot;0.0923763&quot;},{&quot;a&quot;:&quot;0.100074&quot;},{&quot;a&quot;:&quot;0.0941468&quot;},{&quot;a&quot;:&quot;0.0933905&quot;}],[{&quot;a&quot;:&quot;3838&quot;},{&quot;a&quot;:&quot;2008&quot;},{&quot;a&quot;:&quot;0.0960693&quot;},{&quot;a&quot;:&quot;0.0933856&quot;},{&quot;a&quot;:&quot;0.220211&quot;},{&quot;a&quot;:&quot;0.0957791&quot;},{&quot;a&quot;:&quot; 0.11346&quot;},{&quot;a&quot;:&quot;0.092769&quot;},{&quot;a&quot;:&quot;0.100026&quot;},{&quot;a&quot;:&quot;0.0945782&quot;},{&quot;a&quot;:&quot;0.0937223&quot;}],[{&quot;a&quot;:&quot;4047&quot;},{&quot;a&quot;:&quot;2009&quot;},{&quot;a&quot;:&quot;0.0964974&quot;},{&quot;a&quot;:&quot;0.0939162&quot;},{&quot;a&quot;:&quot;0.217144&quot;},{&quot;a&quot;:&quot;0.0962206&quot;},{&quot;a&quot;:&quot;0.113301&quot;},{&quot;a&quot;:&quot;0.093328&quot;},{&quot;a&quot;:&quot;0.100302&quot;},{&quot;a&quot;:&quot;0.095054&quot;},{&quot;a&quot;:&quot;0.0942375&quot;}],[{&quot;a&quot;:&quot;4225&quot;},{&quot;a&quot;:&quot;2010&quot;},{&quot;a&quot;:&quot;0.0967401&quot;},{&quot;a&quot;:&quot;0.0942386&quot;},{&quot;a&quot;:&quot;0.215367&quot;},{&quot;a&quot;:&quot;0.0965405&quot;},{&quot;a&quot;:&quot;0.113105&quot;},{&quot;a&quot;:&quot;0.0936731&quot;},{&quot;a&quot;:&quot;0.100455&quot;},{&quot;a&quot;:&quot;0.0953326&quot;},{&quot;a&quot;:&quot;0.0945475&quot;}],[{&quot;a&quot;:&quot;4438&quot;},{&quot;a&quot;:&quot;2011&quot;},{&quot;a&quot;:&quot;0.0971674&quot;},{&quot;a&quot;:&quot;0.0947718&quot;},{&quot;a&quot;:&quot;0.212383&quot;},{&quot;a&quot;:&quot;0.0969763&quot;},{&quot;a&quot;:&quot;0.112859&quot;},{&quot;a&quot;:&quot;0.0942303&quot;},{&quot;a&quot;:&quot;0.100725&quot;},{&quot;a&quot;:&quot;0.0958194&quot;},{&quot;a&quot;:&quot;0.0950676&quot;}],[{&quot;a&quot;:&quot;4613&quot;},{&quot;a&quot;:&quot;2012&quot;},{&quot;a&quot;:&quot;0.0974693&quot;},{&quot;a&quot;:&quot;0.0951548&quot;},{&quot;a&quot;:&quot;0.210047&quot;},{&quot;a&quot;:&quot;0.0972847&quot;},{&quot;a&quot;:&quot;0.112898&quot;},{&quot;a&quot;:&quot;0.0946316&quot;},{&quot;a&quot;:&quot;0.100906&quot;},{&quot;a&quot;:&quot;0.096167&quot;},{&quot;a&quot;:&quot;0.0954406&quot;}],[{&quot;a&quot;:&quot;4616&quot;},{&quot;a&quot;:&quot;2013&quot;},{&quot;a&quot;:&quot;0.0974794&quot;},{&quot;a&quot;:&quot;0.0951666&quot;},{&quot;a&quot;:&quot;0.209974&quot;},{&quot;a&quot;:&quot;0.0972949&quot;},{&quot;a&quot;:&quot;0.112897&quot;},{&quot;a&quot;:&quot;0.0946438&quot;},{&quot;a&quot;:&quot;0.100914&quot;},{&quot;a&quot;:&quot;0.096178&quot;},{&quot;a&quot;:&quot;0.0954522&quot;}]]" />
+<input id="nameJSList" type="hidden" value="[{&quot;name&quot;:&quot;BAIBICH, MN&quot;}, {&quot;name&quot;:&quot;BROTO, JM&quot;}, {&quot;name&quot;:&quot;FERT, A&quot;}, {&quot;name&quot;:&quot;VANDAU, FN&quot;}, {&quot;name&quot;:&quot;PETROFF, F&quot;}, {&quot;name&quot;:&quot;EITENNE, P&quot;}, {&quot;name&quot;:&quot;CREUZET, G&quot;}, {&quot;name&quot;:&quot;FRIEDERICH, A&quot;}, {&quot;name&quot;:&quot;CHAZELAS, J&quot;}]"/>
+<input id="predictResult" type="hidden" value="[{&quot;count&quot;:&quot;5.90451&quot;,&quot;year&quot;:&quot;lambda:&quot;},{&quot;count&quot;:&quot;7.46396&quot;,&quot;year&quot;:&quot;mu:&quot;},{&quot;count&quot;:&quot;1.32379&quot;,&quot;year&quot;:&quot;sigma:&quot;},{&quot;count&quot;:&quot;0&quot;,&quot;year&quot;:&quot;1988&quot;},{&quot;count&quot;:&quot;7&quot;,&quot;year&quot;:&quot;1989&quot;},{&quot;count&quot;:&quot;50&quot;,&quot;year&quot;:&quot;1990&quot;},{&quot;count&quot;:&quot;154&quot;,&quot;year&quot;:&quot;1991&quot;},{&quot;count&quot;:&quot;281&quot;,&quot;year&quot;:&quot;1992&quot;},{&quot;count&quot;:&quot;522&quot;,&quot;year&quot;:&quot;1993&quot;},{&quot;count&quot;:&quot;751&quot;,&quot;year&quot;:&quot;1994&quot;},{&quot;count&quot;:&quot;964&quot;,&quot;year&quot;:&quot;1995&quot;},{&quot;count&quot;:&quot;1215&quot;,&quot;year&quot;:&quot;1996&quot;},{&quot;count&quot;:&quot;1466&quot;,&quot;year&quot;:&quot;1997&quot;},{&quot;count&quot;:&quot;1681&quot;,&quot;year&quot;:&quot;1998&quot;},{&quot;count&quot;:&quot;1947&quot;,&quot;year&quot;:&quot;1999&quot;},{&quot;count&quot;:&quot;2156&quot;,&quot;year&quot;:&quot;2000&quot;},{&quot;count&quot;:&quot;2329&quot;,&quot;year&quot;:&quot;2001&quot;},{&quot;count&quot;:&quot;2535&quot;,&quot;year&quot;:&quot;2002&quot;},{&quot;count&quot;:&quot;2747&quot;,&quot;year&quot;:&quot;2003&quot;},{&quot;count&quot;:&quot;2980&quot;,&quot;year&quot;:&quot;2004&quot;},{&quot;count&quot;:&quot;3159&quot;,&quot;year&quot;:&quot;2005&quot;},{&quot;count&quot;:&quot;3372&quot;,&quot;year&quot;:&quot;2006&quot;},{&quot;count&quot;:&quot;3591&quot;,&quot;year&quot;:&quot;2007&quot;},{&quot;count&quot;:&quot;3837&quot;,&quot;year&quot;:&quot;2008&quot;},{&quot;count&quot;:&quot;4046&quot;,&quot;year&quot;:&quot;2009&quot;},{&quot;count&quot;:&quot;4224&quot;,&quot;year&quot;:&quot;2010&quot;},{&quot;count&quot;:&quot;4437&quot;,&quot;year&quot;:&quot;2011&quot;},{&quot;count&quot;:&quot;4612&quot;,&quot;year&quot;:&quot;2012&quot;},{&quot;count&quot;:&quot;4754.99&quot;,&quot;year&quot;:&quot;2013&quot;},{&quot;count&quot;:&quot;4907.42&quot;,&quot;year&quot;:&quot;2014&quot;},{&quot;count&quot;:&quot;5053.09&quot;,&quot;year&quot;:&quot;2015&quot;},{&quot;count&quot;:&quot;5192.26&quot;,&quot;year&quot;:&quot;2016&quot;},{&quot;count&quot;:&quot;5325.21&quot;,&quot;year&quot;:&quot;2017&quot;},{&quot;count&quot;:&quot;5452.22&quot;,&quot;year&quot;:&quot;2018&quot;},{&quot;count&quot;:&quot;5573.57&quot;,&quot;year&quot;:&quot;2019&quot;},{&quot;count&quot;:&quot;5689.52&quot;,&quot;year&quot;:&quot;2020&quot;}]"/>
+
+<script type="text/javascript">
+function dataConvert(dataArray,id,nameCount){
+    var newDataArray = new Array(dataArray.length);
+    if(nameCount<id) {
+    	return newDataArray;
+    }
+    for(var i=0; i< dataArray.length;i++){
+    	newDataArray[i] =new Array(2);
+    	newDataArray[i][0] =dataArray[i][0];
+    	newDataArray[i][1] =dataArray[i][id];
+    }
+return newDataArray;
+};
+function authorName(nameList,id){
+	if(nameList.length>=id){
+		return nameList[id-1].name;
+	}else{
+		return '-';
+	}
+}
+</script>
+<script type="text/javascript">
+  function drawCanvas(dataArray, canvasId,canvasTitle){
+  	var chart = new AChart({
+          theme : AChart.Theme.Smooth2,
+          id : canvasId,
+          width : 600,
+          height : 400,
+          plotCfg : {
+            margin : [50,50,80] //����ı߾�
+          },
+		  subTitle: {
+                text: 'Author Credit Share'
+            },
+			legend : {
+            dy : 25, //����ͼ�����ƫ��y
+            dx : 0,
+            align : 'bottom',//top,left,right,bottom(Ĭ��)
+            //layout : 'vertical',//Ĭ�� horizontal
+            
+            spacingX : 0
+         vi view
+	xTickCounts : [2,dataArray.length],
+		  xAxis:{
+		  		title: {
+                    text: 'Year'
+				}
+		  },
+		   yAxis: {        //y�����title
+                title: {
+                    text: canvasTitle
+				},
+				ticks : [0,0.2,0.4, 0.6 ,0.8, 1.0, 1.2]
+		 },
+          seriesOptions : {
+              lineCfg : {
+                markers : {
+                  marker : {
+                    'stroke-width' : 0.5,
+                    'fill-opacity' : .5
+                  },
+                  actived : {
+                      radius : 8	,
+                      stroke: '#fff'
+                  },
+pointInterval:5
+                }
+              }
+          },
+          tooltip : {
+            shared : true, //�Ƿ����������й�ͬ��ʾ��Ϣ
+            crosshairs : true //�Ƿ���ֻ�׼��
+            /**/
+          },
+          series: [{   
+                  name: authorName(nameList,1) ,                                                                  
+                  data: dataConvert(dataArray ,1,nameList.length)
+             	 }		,
+				  {   
+                  name: authorName(nameList,2) ,                                                                  
+                  data: dataConvert(dataArray ,2,nameList.length)
+             	 }		,
+				 {   
+                  name: authorName(nameList,3) ,                                                                  
+                  data: dataConvert(dataArray ,3,nameList.length)
+             	 }		,
+				 {   
+                  name: authorName(nameList,4) ,                                                                  
+                  data: dataConvert(dataArray ,4,nameList.length)
+             	 }		,
+				 {   
+                  name: authorName(nameList,5) ,                                                                  
+                  data: dataConvert(dataArray ,5,nameList.length)
+             	 }		,
+				 {   
+                  name: authorName(nameList,6) ,                                                                  
+                  data: dataConvert(dataArray ,6,nameList.length)
+             	 }		,
+				 {   
+                  name: authorName(nameList,7) ,                                                                  
+                  data: dataConvert(dataArray ,7,nameList.length)
+             	 }	,
+				 {   
+                  name: authorName(nameList,8) ,                                                                  
+                  data: dataConvert(dataArray ,8,nameList.length)
+             	 }		,
+				 {   
+                  name: authorName(nameList,9) ,                                                                  
+                  data: dataConvert(dataArray ,9,nameList.length)
+             	 },
+				 {   
+                  name: authorName(nameList,10) ,                                                                  
+                  data: dataConvert(dataArray ,10,nameList.length)
+             	 }
+		  
+	  ]
+        });
+ 
+        chart.render();
+  };
+  </script>
+  <script type="text/javascript">
+  function drawPredict(dataArray,predictDataArray){
+  	var chart = new AChart({
+          theme : AChart.Theme.Smooth2,
+          id : 'predictCanvas',
+          width : 600,
+          height : 400,
+          plotCfg : {
+            margin : [50,50,80] //����ı߾�
+          },
+		  title: {
+                text: 'Citation Count Prediction',
+				'font-family':'WenQuanYi Micro Hei'
+            },
+          seriesOptions : { //���ö�����й�ͬ������
+            areaCfg : { //�����������δָ�����ͣ���Ĭ��Ϊָ����xxCfg�����ͣ�����Ĭ����line
+          	markers : {
+            single : true
+          	}
+        }
+          },
+          tooltip : {
+		  	valueSuffix : 'citations',
+            crosshairs : true 
+          },
+          series : [{
+                name: 'Citation Count ',
+                data: dataArray
+            },
+			{
+                name: 'Predicted Citation Count ',
+                data: predictDataArray
+            }]
+        });
+        chart.render();
+  };
+  </script>
+<script type="text/javascript"> 
+  		var dataList=$("#dataList").val();
+		var mid =eval(dataList);
+		var nameJSList=$("#nameJSList").val();
+		var nameList=eval(nameJSList);
+		var accDataArray = new Array(mid.length);
+		var i =0;
+		var nameListLength = nameList.length;
+		for(i=0;i<mid.length;i++){
+			accDataArray[i] =new Array(nameList.length+1);
+			accDataArray[i][0]=parseInt(mid[i][1].a);
+			for(var j=1;j<=nameList.length;j++){
+				accDataArray[i][j]=mid[i][j+1].a;
+			}
+		}
+		drawCanvas(accDataArray,"canvas","Credit shares",nameList);
+		var predictResult=$("#predictResult").val();
+		var predictMid=eval(predictResult);
+		var realDataArray = new Array(predictMid.length-3);
+		var predictDataArray = new Array(9);
+		for(i=3;i<predictMid.length;i++){
+		   var year = parseInt(predictMid[i].year);
+		   if(year<=2012){
+		    realDataArray[i-3]=new Array(2);
+			realDataArray[i-3][0]=year;
+			realDataArray[i-3][1]=parseInt(predictMid[i].count);
+			}
+			if(predictMid[predictMid.length-1].year>2013){
+    			if(year>=2012){
+    			   var j= year-2012 ;
+    				predictDataArray[j]=new Array(2);
+					predictDataArray[j][0]=year;
+					predictDataArray[j][1]=parseInt(predictMid[i].count);
+    			}
+			}
+		}
+		drawPredict(realDataArray,predictDataArray);
+</script>

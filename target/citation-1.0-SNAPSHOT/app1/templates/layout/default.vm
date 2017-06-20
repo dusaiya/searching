@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+		<title>Title Search Page</title>
+		<link href="bui.css" rel="stylesheet">
+		<link href="dpl.css" rel="stylesheet">
+		<script src="jquery-1.12.0.min.js"></script>
+		<script src="echarts.min.js"></script>
+		<script src="acharts-min.js"></script>
+		<script src="china.js"></script>
+  		<script src="http://g.alicdn.com/bui/seajs/2.3.0/sea.js"></script>
+  		<script src="http://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+</head>
+<style>
+	 #lefttable{
+	 BORDER-RIGHT:#DDDDDD  1px solid;
+	 BORDER-BOTTOM:#DDDDDD  1px solid;
+	}
+	#righttable{
+	 BORDER-LEFT:#DDDDDD  1px solid;
+	 BORDER-BOTTOM:#DDDDDD  1px solid;
+	}
+	.float-left {
+        float: left;
+      }
+      
+      .float-right {
+        float: right;
+        }
+      
+      
+      
+      .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+      }
+      .pagetitle{
+	        font-size:30px;
+	        margin-top:40px;
+	        margin-left:10%;
+	        margin-right:10%;
+	        width:80%;
+	        text-align:center;
+     	}
+        .pagehead{
+            margin-top:40px;
+            margin-left:10%;
+        	margin-right:10%;
+            width:80%;
+            text-align:center;
+    	}
+      
+</style>
+<body>
+<div style="margin:10px" style="width:100%;">
+        <div class="float-left" style="width:60%;margin-left:10%" align="center">
+        	<h1 style="font-size: 40px">基于用户日志的舆情态势分析系统</h1>
+        </div>
+        <div class="float-right" style="margin-top:20px;width:15%" align="left">
+                <a href="homepage.htm" style="font-size:20px">返回首页</a>
+        </div>
+ </div>
+  <div class="demo-content" style="border-width:20px; border-style:solid; border-color:white;">
+		$screen_placeholder
+  </div>
+</body>
+</html>

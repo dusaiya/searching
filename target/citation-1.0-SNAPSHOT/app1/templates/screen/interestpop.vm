@@ -1,0 +1,343 @@
+<div class="pagehead">
+        <div class="pagetitle">
+        	<h1>话题分析</h1>
+        </div>
+	##<div>outputResult: $!outputResult</div>
+    ##<div>message: $message</div>
+    ##<div>py:$py</div>
+	<div class="demo-content" align="center">
+		<form class="form-panel" method="post">
+	        <div class="panel-title" style="margin: 10px" >
+                <span>
+                    <label>事件:&nbsp&nbsp</label>$!title
+                </span>
+            </div>
+            <div class="panel-title" style="margin: 10px" >
+        		<span>
+                    <label>搜索日期 :&nbsp&nbsp</label>$!sqlTime
+               </span>
+            </div>
+		</form>
+	#if($!emptyFlag==0)
+		<div class="demo-content" align="center">
+		
+		<input id="timeList" type="hidden" value="$!timeList"/>
+		<div id="main" style="width: 800px;height:500px;margin-top:10px;" ></div>
+		
+		<input id="map1List" type="hidden" value="$!map1List"/>
+		<input id="map2List" type="hidden" value="$!map2List"/>
+		<input id="map3List" type="hidden" value="$!map3List"/>
+		<input id="map4List" type="hidden" value="$!map4List"/>
+		<input id="map5List" type="hidden" value="$!map5List"/>
+		<input id="areaMaxCt" type="hidden" value="$!areaMaxCt"/>
+		<div id="map" style="width: 800px;height:500px;margin-top:10px;"></div>
+		
+		<input id="groupList" type="hidden" value="$!groupList"/>
+		<div align="center" style="width: 800px;height:500px;margin-top:10px;">
+		<h3> 活跃用户分布</3>
+            <table class="table table-striped">
+            	<tr>
+            		<th>用户IP</th>
+            		<th>省份</th>
+            		<th>搜索频次</th>
+            	</tr>
+                #foreach($!group in $!groupList)
+                <tr>
+                    #foreach($!elem in $!group)
+                        <td>$!elem</td>
+                    #end
+                </tr>
+                #end
+            </table>
+         </div>
+	
+		<div align="center" style="width: 800px;height:500px;margin-top:10px;">
+			<h3>用户访问网页排行</h3>
+				<table class="table table-striped">	
+				    <tr>
+						<th>被访问网页标题</th>
+						<th>访问次数</th>
+						<th>被访问网页分析</th>
+					</tr>
+					#foreach($!url in $!urlList)
+					<tr>
+						<td><a href="$!url.get(0)" target="_blank">$!url.get(1)</a></td>
+                        <td>$!url.get(2)</td>
+                        <td>
+                        	<a class="button button-primary" onclick="queryWords('$!url.get(0)','$!startTime')">被访问网页分析</a>
+                        </td>
+					</tr>
+					#end
+				</table>
+		</div>
+		#end
+	</div>
+</div>
+<!-- SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT -->
+<!-- 时序折线图 -->
+<script type="text/javascript">
+var timeList=$("#timeList").val();
+var time=eval(timeList);
+var timeNameArray = new Array(time.length);
+var timeData1Array = new Array(time.length);
+var timeData2Array = new Array(time.length);
+var timeData3Array = new Array(time.length);
+var timeData4Array = new Array(time.length);
+var timeData5Array = new Array(time.length);
+var timeData6Array = new Array(time.length);
+for(i=0;i<time.length;i++){
+	timeNameArray[i]=time[i].name;
+	timeData1Array[i]=time[i].data1;
+	timeData2Array[i]=time[i].data2;
+	timeData3Array[i]=time[i].data3;
+	timeData4Array[i]=time[i].data4;
+	timeData5Array[i]=time[i].data5;
+	timeData6Array[i]=time[i].data6;
+}
+
+var myChart = echarts.init(document.getElementById('main'));
+var option = {
+            title: {
+                text: '时序趋势分析',
+                subtext: '搜索热度'
+            },
+            tooltip : {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    animation: false,
+                    label: {
+                        backgroundColor: '#505765'
+                    }
+                }
+            },
+            legend: {
+                data:['360搜索','搜狐搜狗','百度','微软必应(Bing)', '神马', '全量']
+            },
+            dataZoom: [
+                {   // 这个dataZoom组件，默认控制x轴。
+                    type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+                    start: 0,      // 左边在 10% 的位置。
+                    end: 100         // 右边在 60% 的位置。
+                }
+            ],
+            xAxis: {
+                data: timeNameArray
+            },
+            yAxis: {},
+            series: [{
+	                	name: '360搜索',
+	                	type: 'line',
+	                	smooth:'true',
+	                	itemStyle : {  
+						    normal : {  
+						    	color:'#00FF00', 
+						        lineStyle:{  
+						            color:'#00FF00'  
+						        }  
+						    }  
+						},
+	                	data: timeData1Array
+            		},{
+	                	name: '搜狐搜狗',
+	                	type: 'line',
+	                	smooth:true,
+	                	itemStyle : {  
+						    normal : {  
+						    	color:'#F9F900', 
+						        lineStyle:{  
+						            color:'#F9F900'  
+						        }  
+						    }  
+						},
+	                	data: timeData2Array
+            		},{
+	                	name: '百度',
+	                	type: 'line',
+	                	smooth:true,
+	                	itemStyle : {  
+						    normal : {  
+						    	color:'#FF8000', 
+						        lineStyle:{  
+						            color:'#FF8000'  
+						        }  
+						    }  
+						},
+	                	data: timeData3Array
+            		},{
+	                	name: '微软必应(Bing)',
+	                	type: 'line',
+	                	smooth:true,
+	                	itemStyle : {  
+	                		color:'#613030', 
+						    normal : {  
+						        lineStyle:{  
+						            color:'#613030'  
+						        }  
+						    }  
+						},
+	                	data: timeData4Array
+            		},{
+	                	name: '神马',
+	                	type: 'line',
+	                	smooth:true,
+	                	itemStyle : {  
+	                		color:'#2828FF', 
+						    normal : {  
+						        lineStyle:{  
+						            color:'#2828FF'  
+						        }  
+						    }  
+						},
+	                	data: timeData5Array
+            		},{
+	                	name: '全量',
+	                	type: 'line',
+	                	smooth:true,
+	                	itemStyle : {  
+						    normal : { 
+						    	color:'#000000',  
+						        lineStyle:{  
+						            color:'#000000'  
+						        }  
+						    }  
+						}, 
+	                	data: timeData6Array
+            		}
+            	]
+        };
+myChart.setOption(option);
+</script>
+
+<!-- SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT -->
+<!--地图展示-->
+<script type="text/javascript">
+var map1List=$("#map1List").val();
+var map1=eval(map1List);
+var map2List=$("#map2List").val();
+var map2=eval(map2List);
+var map3List=$("#map3List").val();
+var map3=eval(map3List);
+var map4List=$("#map4List").val();
+var map4=eval(map4List);
+var map5List=$("#map5List").val();
+var map5=eval(map5List);
+var areaMaxCt=$("#areaMaxCt").val();
+var myChart = echarts.init(document.getElementById('map'));
+option = {
+    title: {
+        text: '地域传播分析',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data:['360搜索','搜狐搜狗','百度','微软必应(Bing)','其他']
+    },
+    visualMap: {
+        min: 0,
+        max: areaMaxCt,
+        left: 'left',
+        top: 'bottom',
+        text: ['高','低'],           // 文本，默认为数值文本
+        calculable: true,
+        inRange: {
+                color: ['lightskyblue','yellow', 'orangered']
+            }
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            dataView: {readOnly: false},
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    series: [
+        {
+            name: '360搜索',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:map1
+        },{
+            name: '搜狐搜狗',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:map2
+        },{
+            name: '百度',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:map3
+        },{
+            name: '微软必应(Bing)',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:map4
+        },{
+            name: '其他',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:map5
+        }
+        
+    ]
+};
+myChart.setOption(option);
+</script>
+<script type="text/javascript">
+ function queryWords(title,startTime){
+	window.location.href="websitedetail.htm?title="+title+"&startTime="+startTime;
+  };
+</script>

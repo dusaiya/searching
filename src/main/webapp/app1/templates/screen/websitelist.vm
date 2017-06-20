@@ -1,0 +1,81 @@
+<div class="pagehead">
+        <div class="pagetitle"><h1>特定网页分析</h1></div>
+	<div class="demo-content" style="margin-top: 10px;">
+		
+	    <form class="form-panel" method="post">
+	    <div class="panel-title" style="margin-top: 10px;" >
+		      <span>
+		        <label>搜索日期: </label><input id="t1" type="text" class="calendar" style="width:100px;" value="$!sqlTime"/>
+		      <input id="t2" type="hidden" value="$!startTime"/>
+		      </span>
+	 	</div>
+	 	<div style="margin-bottom:10px">
+	 		<a class="button button-primary" onclick="queryWebsiteList()"  name="提交">提交</a>
+	 	</div>
+	    </form>
+		
+		<div>
+		<h2>
+				#if($!emptyFlag) 2017-05-01 至 2017-05-15 #else $!sqlTime #end 热点网页排行
+		</h2>
+			<table class="table table-striped">
+					#if($!message)
+						<h2>&nbsp&nbsp&nbsp&nbsp<font color="red">No result: $!message</font></h2>
+					#else
+		        		<tr>
+		        			<th>排名</th>
+		        			<th>url标题</th>
+		        			<th>热度</th>
+		        			<th>操作</th>
+		        		</tr>
+		    			#foreach($!result in $!resultSet)
+						<tr>
+							<td>$!result.index</td>
+							<td>
+								<a href="$!result.url" target="_blank">$!result.title</a>
+							</td>
+		    				<td>$!result.count</td>
+		    				<td>
+								<a href	="javascript:void(0)" class="button button-primary" target="_blank" onclick="queryWebsiteDetail('$!result.url')" >分析</a>
+							</td>
+						</tr>
+						#end
+					#end
+			</table>
+		</div
+	</div>
+</div>
+<script type="text/javascript">
+    BUI.use('bui/calendar',function(Calendar){
+      var datepicker = new Calendar.DatePicker({
+        trigger:'#t1',
+        showTime : false,
+        minDate : '2017-05-01',
+        maxDate : '2017-05-15',
+        lockTime : { //可以锁定时间，hour,minute,second
+          hour:00,
+          minute : 00,
+          second : 00
+        },
+        dateMask : 'yyyy-mm-dd',
+        autoRender : true,
+        selectedDate:new Date('2017-05-01')
+      });
+});
+</script>
+<script type="text/javascript">
+ function queryWebsiteDetail(title){
+  	var startTime = $("#t2").val();
+	window.location.href="websitedetail.htm?title=" + title + "&startTime="+startTime;
+  };
+</script>
+<script type="text/javascript">
+ function queryWebsiteList(){
+  	var startTime = $("#t1").val();
+	if(startTime==""){
+		alert("时间不能为空!");
+		return false;
+	}
+	window.location.href="websitelist.htm?startTime="+startTime;
+  };
+</script>

@@ -1,0 +1,238 @@
+<div class="pagehead">
+        <div class="pagetitle"><h1>网页分析</h1></div>
+	##<div>outputResult: $!outputResult</div>
+    ##<div>message: $message</div>
+    ##<div>py:$py</div>
+    
+	<div class="demo-content" style="margin: 10px">
+                <form class="form-panel" method="post">
+	        <div class="panel-title" style="margin: 10px" >
+	                <span>
+	                        <label>网页链接:&nbsp&nbsp</label><input id="title" style="width:600px;" value="$!title"/>
+	                </span>
+	        </div>
+	        <div class="panel-title" style="margin: 10px" >
+		        <span>
+			        <label>搜索日期: </label><input id="t1" type="text" class="calendar" style="width:180px;" value="$!sqlTime"/>
+			        <input id="t2" type="hidden" value="$!startTime"/>
+			        ##<label>至</label><input id="t2" type="text" class="calendar calendar-time" style="width:180px;" value="$!endTime"/>
+			     </span>
+	        </div>
+	        <a class="button button-primary" onclick="queryWebsiteDetail()"  name="分析">分析</a>
+		</form>
+        </div>
+        
+		<div class="demo-content" align="center">
+		
+		<input id="timeList" type="hidden" value="$!timeList"/>
+		<div id="main" style="width: 800px;height:500px;margin-top:10px;" ></div>
+		
+		<input id="mapList" type="hidden" value="$!mapList"/>
+		<div id="map" style="width: 800px;height:500px;margin-top:10px;"></div>
+		
+		<input id="groupList" type="hidden" value="$!groupList"/>
+		<input id="areaMaxCt" type="hidden" value="$!areaMaxCt"/>
+		##<div id="group" style="width: 800px;height:500px;"></div>
+		<div align="center" style="width: 800px;height:500px;margin-top:10px;">
+		<h3> 活跃用户分布</h3>
+            <table class="table table-striped">
+            	<tr>
+            		<th>用户IP</th>
+            		<th>省份</th>
+            		<th>搜索频次</th>
+            	</tr>
+            	
+                #foreach($!group in $!groupList)
+                <tr>
+                    #foreach($!elem in $!group)
+                        <td>$!elem</td>
+                    #end
+                </tr>
+                #end
+            </table>
+         </div>
+		
+		
+		<div align="center" style="width: 800px;height:500px;margin-top:10px;">
+		<h3>关键词排行</h3>
+				<table class="table table-striped">	
+					<tr>
+						<th>搜索词</th>
+						<th>被访问频次</th>
+						<th>搜索词访问分析</th>
+					</tr>
+					
+					#foreach($!url in $!urlList)
+					<tr>
+						<td>$!url.get(0)</td>
+                        <td>$!url.get(1)</td>
+                        <td>
+                        	<a class="button button-primary" onclick="queryUrls('$!url.get(0)','$!sqlTime')">分析搜索词</a>
+                        </td>
+					</tr>
+					#end
+				</table>
+		</div>
+	</div>
+</div>
+<!-- SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT -->
+<!-- 时序折线图 -->
+<script type="text/javascript">
+var timeList=$("#timeList").val();
+var time=eval(timeList);
+var timeNameArray = new Array(time.length);
+var timeDataArray = new Array(time.length);
+for(i=0;i<time.length;i++){
+	timeNameArray[i]=time[i].name;
+	timeDataArray[i]=time[i].data;
+}
+var myChart = echarts.init(document.getElementById('main'));
+var option = {
+            title: {
+                text: '时序趋势分析'
+            },
+            tooltip: {
+            	trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    animation: false,
+                    label: {
+                        backgroundColor: '#505765'
+                    }
+                },
+              feature: {
+                dataZoom: {
+                yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+              }
+            },
+            legend: {
+                data:['热度']
+            },
+            dataZoom: [
+                {   // 这个dataZoom组件，默认控制x轴。
+                    type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+                    start: 0,      // 左边在 10% 的位置。
+                    end: 100         // 右边在 80% 的位置。
+                }
+            ],
+            xAxis: {
+                data: timeNameArray
+            },
+            yAxis: {},
+            series: [{
+                name: '热度',
+                type: 'line',
+                smooth:true,
+                data: timeDataArray
+            }]
+        };
+myChart.setOption(option);
+</script>
+
+<!-- SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT -->
+<!--地图展示-->
+<script type="text/javascript">
+var mapList=$("#mapList").val();
+var map=eval(mapList);
+var areaMaxCt=$("#areaMaxCt").val();
+
+var myChart = echarts.init(document.getElementById('map'));
+option = {
+    title: {
+        text: '地域传播分析',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data:['热度']
+    },
+    visualMap: {
+        min: 0,
+        max: areaMaxCt,
+        left: 'left',
+        top: 'bottom',
+        text: ['高','低'],           // 文本，默认为数值文本
+        calculable: true,
+        inRange: {
+                color: ['lightskyblue','yellow', 'orangered']
+            }
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            dataView: {readOnly: false},
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    series: [
+        {
+            name: '热度',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:map
+        }
+    ]
+};
+myChart.setOption(option);
+</script>
+
+
+<script type="text/javascript">
+ function queryWebsiteDetail(){
+  	var startTime = $("#t1").val();
+  	var title=$("#title").val();
+  	if(title==""){
+  		alert("网页链接不能为空!")
+		return false
+  	}
+	if(startTime==""){
+		alert("日期不能为空!")
+		return false
+	}
+	window.location.href="websitedetail.htm?title="+title+"&startTime="+startTime;
+  };
+</script>
+<script type="text/javascript">
+    BUI.use('bui/calendar',function(Calendar){
+      var datepicker = new Calendar.DatePicker({
+        trigger:'#t1',
+        showTime : false,
+        minDate : '2017-05-01',
+        maxDate : '2017-05-15',
+        lockTime : { //可以锁定时间，hour,minute,second
+          minute : 00,
+          hour:00,
+          second : 00
+        },
+        dateMask : 'yyyy-mm-dd',
+        autoRender : true,
+        selectedDate:new Date('2017-05-01')
+      });
+   });
+</script>
+<script type="text/javascript">
+ function queryUrls(word,startTime){
+ 	window.open("popdetail.htm?title="+word+"&startTime="+startTime,"_blank");
+	##window.location.href="popdetail.htm?title="+word+"&startTime="+startTime;
+  };
+</script>

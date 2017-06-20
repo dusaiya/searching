@@ -1,0 +1,322 @@
+<div class="pagehead">
+        <div class="pagetitle"><h1>热点事件分析</h1></div>
+	##<div>outputResult: $!outputResult</div>
+    ##<div>message: $message</div>
+    ##<div>py:$py</div>
+    
+	<div class="demo-content" style="margin: 10px">
+                <form class="form-panel" method="post">
+                        <div class="panel-title" style="margin: 10px" >
+                                <span>
+                                        <label>事件:&nbsp&nbsp</label>$!title
+                                </span>
+                        </div>
+                        <div class="panel-title" style="margin: 10px" >
+                        		<span>
+                                        <label>搜索日期 :&nbsp&nbsp</label>$!sqlTime
+                               </span>
+                        </div>
+                </form>
+        </div>
+        
+		<div class="demo-content" align="center">
+		
+		<input id="timeList" type="hidden" value="$!timeList"/>
+		<div id="main" style="width: 800px;height:500px;margin-top:10px;" ></div>
+		
+		<input id="mapList" type="hidden" value="$!mapList"/>
+		<div id="map" style="width: 800px;height:500px;margin-top:10px;"></div>
+		
+		<input id="groupList" type="hidden" value="$!groupList"/>
+		<input id="areaMaxCt" type="hidden" value="$!areaMaxCt"/>
+		##<div id="group" style="width: 800px;height:500px;"></div>
+		<div align="center" style="width: 800px;height:500px;margin-top:10px;">
+		<h3> 活跃用户分布</3>
+            <table class="table table-striped">
+            	<tr>
+            		<th>用户IP</th>
+            		<th>省份</th>
+            		<th>搜索频次</th>
+            	</tr>
+            	
+                #foreach($!group in $!groupList)
+                <tr>
+                    #foreach($!elem in $!group)
+                        <td>$!elem</td>
+                    #end
+                </tr>
+                #end
+            </table>
+         </div>
+		
+		<input id="urlCt" type="hidden" value="$!urlCt"/>
+		<div align="center" style="width: 800px;height:500px;margin-top:10px;">
+		<h3>用户访问网页排行</h3>
+				<table class="table table-striped">	
+					<tr>
+						<th>被访问网页</th>
+						<th>被访问频次</th>
+						<th>分析</th>
+					</tr>
+					#set($bt4Value=0)
+					#foreach($!url in $!urlList)
+					#set($bt4Value=$bt4Value+1)
+					<tr>
+						<td><a href="$!url.get(1)" target="_blank">$!url.get(0)</a></td>
+                        <td>$!url.get(2)</td>
+                        <td>
+                        	<a class="button button-primary" onclick="queryWords('$!url.get(1)','$!startTime','$!endTime')">分析</a>
+                        	##<button id="btnShow$bt4Value" class="button button-primary" value="$!url.get(1)">被访问网页分析</button>
+                        </td>
+					</tr>
+					#end
+				</table>
+		</div>
+	</div>
+</div>
+<!-- SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT -->
+<!-- 时序折线图 -->
+<script type="text/javascript">
+var timeList=$("#timeList").val();
+var time=eval(timeList);
+var timeNameArray = new Array(time.length);
+var timeDataArray = new Array(time.length);
+for(i=0;i<time.length;i++){
+	timeNameArray[i]=time[i].name;
+	timeDataArray[i]=time[i].data;
+}
+var myChart = echarts.init(document.getElementById('main'));
+var option = {
+            title: {
+                text: '时序趋势分析'
+            },
+            tooltip: {
+            	trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    animation: false,
+                    label: {
+                        backgroundColor: '#505765'
+                    }
+                },
+              feature: {
+                dataZoom: {
+                yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+              }
+            },
+            legend: {
+                data:['热度']
+            },
+            dataZoom: [
+                {   // 这个dataZoom组件，默认控制x轴。
+                    type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+                    start: 0,      // 左边在 10% 的位置。
+                    end: 100         // 右边在 80% 的位置。
+                }
+            ],
+            xAxis: {
+                data: timeNameArray
+            },
+            yAxis: {},
+            series: [{
+                name: '热度',
+                type: 'line',
+                smooth:true,
+                data: timeDataArray
+            }]
+        };
+myChart.setOption(option);
+</script>
+
+<!-- SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT -->
+<!--地图展示-->
+<script type="text/javascript">
+var mapList=$("#mapList").val();
+var map=eval(mapList);
+var areaMaxCt=$("#areaMaxCt").val();
+var myChart = echarts.init(document.getElementById('map'));
+option = {
+    title: {
+        text: '地域传播分析',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data:['热度']
+    },
+    visualMap: {
+        min: 0,
+        max: areaMaxCt,
+        left: 'left',
+        top: 'bottom',
+        text: ['高','低'],           // 文本，默认为数值文本
+        calculable: true,
+        inRange: {
+                color: ['lightskyblue','yellow', 'orangered']
+            }
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            dataView: {readOnly: false},
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    series: [
+        {
+            name: '热度',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:map
+        }
+    ]
+};
+myChart.setOption(option);
+</script>
+
+
+<!-- SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT___SPLIT -->
+<!-- 用户分布-->
+<!--
+<script type="text/javascript">
+var groupList=$("#groupList").val();
+var group=eval(groupList);
+
+var myChart = echarts.init(document.getElementById('group'));
+option = {
+    backgroundColor: '#2c343c',
+
+    title: {
+        text: 'Customized Pie',
+        left: 'center',
+        top: 20,
+        textStyle: {
+            color: '#ccc'
+        }
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    visualMap: {
+        show: false,
+        inRange: {
+            colorLightness: [0.3, 0.8]
+        }
+    },
+    series : [
+        {
+            name:'访问来源',
+            type:'pie',
+            radius : '70%',
+            center: ['50%', '50%'],
+            data : group.sort(function (a, b) { return a.value - b.value; }),
+            roseType: 'radius',
+            label: {
+                normal: {
+                    textStyle: {
+                        color: 'rgba(255, 255, 255, 0.3)'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    lineStyle: {
+                        color: 'rgba(255, 255, 255, 0.3)'
+                    },
+                    smooth: 0.2,
+                    length: 10,
+                    length2: 20
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#c23531',
+                    shadowBlur: 200,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+            animationType: 'scale',
+            animationEasing: 'elasticOut',
+            animationDelay: function (idx) {
+                return Math.random() * 200;
+            }
+        }
+    ]
+};
+myChart.setOption(option);
+</script>
+-->
+<!--
+<script type="text/javascript">
+    //function queryWordCloud(urlstr,id){
+    BUI.use(['bui/overlay','bui/mask'],function(Overlay){
+        var dialog = new Overlay.Dialog({
+            title:'异步加载内容',
+            width:500,
+            height:300,
+            loader : {
+              url : 'flwd.vm',
+              autoLoad : false, //不自动加载
+              params : {a : 'a'},//附加的参数
+              lazyLoad : false, //不延迟加载
+              /*, //以下是默认选项
+              dataType : 'text',   //加载的数据类型
+              property : 'bodyContent', //将加载的内容设置到对应的属性
+              loadMask : {
+                //el , dialog 的body
+              },
+              lazyLoad : {
+                event : 'show', //显示的时候触发加载
+                repeat : true //是否重复加载
+              },
+              callback : function(text){
+                var loader = this,
+                  target = loader.get('target'); //使用Loader的控件，此处是dialog
+                //
+              }
+              */
+            },
+            mask:false
+          });
+          var urlCt=$("#urlCt").val();
+          var count=0;
+          for(i=1;i<=urlCt;i++){
+                var tmpi=i;
+                $('#btnShow'+tmpi).on('click',function () {
+                        var middle=this.outerHTML;
+                        var words=middle.split("\"");
+                        var thisUrl=words[5];
+                        dialog.get('loader').set('url','flwd.vm?url='+thisUrl);
+                        dialog.show();
+                        dialog.get('loader').load({a : count});
+                });
+        }
+            });
+</script>
+-->
+<script type="text/javascript">
+ function queryWords(url,startTime,endTime){
+	window.location.href="websitedetail.htm?title="+url+"&startTime="+startTime + "&endTime="+endTime;
+  };
+</script>

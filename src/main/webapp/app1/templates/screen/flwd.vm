@@ -1,0 +1,19 @@
+<form>
+<div> $!url</div>
+<table>
+	<tr>
+		<td>小猪佩奇</td>
+		<td>1000</td>
+	</tr>
+	<tr>
+		<td>小猪</td>
+		<td>400</td>
+	</tr>
+	<tr>
+		<td>佩奇</td>
+		<td>200</td>
+	</tr>
+	
+</table>
+
+</form>

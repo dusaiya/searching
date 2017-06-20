@@ -1,0 +1,108 @@
+<div class="pagehead">
+        <div class="pagetitle"><h1>话题分析</h1></div>
+	##<div>outputResult: $!outputResult</div>
+    ##<div>message: $message</div>
+    ##<div>py:$py</div>
+    
+	<div class="demo-content" align="center">
+		<form class="form-panel" method="post">
+	        <div class="panel-title" style="margin:10px" >
+	                <span>
+	                        <label>输入话题:&nbsp&nbsp</label><input id="title"  value="$!title" style="width:200px;"/>
+	                </span>
+	        </div>
+	        <div class="panel-title" style="margin: 10px" >
+		        <span>
+			        <label>搜索日期: </label><input id="t1" type="text" class="calendar" style="width:180px;" value="$!sqlTime"/>
+			        <input id="t2" type="hidden" value="$!startTime"/>
+			     </span>
+	        </div>
+	        <div><a class="button button-primary" onclick="queryInterestPop()"  name="查看话题搜索词">查看话题搜索词</a></div>
+		</form>
+	</div>
+	#if($!emptyFlag==0)
+		<div class="demo-content" align="center">
+		<div align="center" style="width: 800px;height:500px;margin-top:10px;">
+			<h3>话题相关搜索词排行</h3>
+			<table class="table table-striped">	
+			    <tr>
+					<th></th>
+                    <th width="5%">#</th>
+                    <th>搜索词</th>
+                    <th>搜索次数</th>
+                    <th></th>
+				</tr>
+				#foreach($!url in $!urlList)
+				<tr>
+                    <td></td>
+					<td><input name="checkedList" type="checkbox" value="$!url.get(0)" /></td>
+                    <td>$!url.get(0)</td>
+                    <td>$!url.get(1)</td>
+                    <td></td>
+            	</tr>
+				#end
+			</table>
+		</div>
+		<div id="rel_div" style="z-index:500; position:fixed; right:300px;bottom:100px;  ">
+        <a class="button button-primary" onclick="queryWords()">话题</br>对应</br>搜索词</br>分析</a>
+</div>
+		#end
+	</div>
+</div>
+
+<script type="text/javascript">
+ function queryInterestPop(){
+  	var startTime = $("#t1").val();
+  	var title=$("#title").val();
+  	if(title==""){
+  		alert("话题不能为空!")
+		return false
+  	}
+	if(startTime==""){
+		alert("搜索日期不能为空!")
+		return false
+	}
+	window.location.href="topicstart.htm?title="+title+"&startTime="+startTime;
+  };
+</script>
+<script type="text/javascript">
+    BUI.use('bui/calendar',function(Calendar){
+      var datepicker = new Calendar.DatePicker({
+        trigger:'#t1',
+        showTime : false,
+        minDate : '2017-05-01',
+        maxDate : '2017-05-15',
+        lockTime : { //可以锁定时间，hour,minute,second
+          minute : 00,
+          hour:00,
+          second : 00
+        },
+        dateMask : 'yyyy-mm-dd',
+        autoRender : true,
+        selectedDate:new Date('2017-05-01')
+      });
+ });
+</script>
+<script type="text/javascript">
+ function queryWords(){
+        var checkedList=document.getElementsByName("checkedList");
+        var title=$('#title').val();
+        var startTime=$('#t1').val();
+        var finalStr="";
+        for(var i=0;i<checkedList.length;i++){
+                var tar= checkedList[i];
+                if(tar.checked){
+                        finalStr=finalStr+tar.defaultValue+"|||";
+                }
+        }
+        if(finalStr==""){
+                alert('至少要勾选一个');
+                return;
+        }
+        finalStr=finalStr.substr(0,finalStr.length-3);
+        window.open("interestpop.htm?title="+title+"&startTime="+startTime+"&str="+finalStr,"_blank");
+};
+</script>
+<script type="text/javascript">
+        $("#rel_div").css("top", $(document).scrollTop()+380 );
+</script>
